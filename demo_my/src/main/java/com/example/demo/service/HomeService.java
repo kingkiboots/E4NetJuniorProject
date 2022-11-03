@@ -40,7 +40,8 @@ public class HomeService {
 		Optional<Member> res = repository.findById(id);
 		if(!res.isPresent() || !(res.get().getPwd().equals(pwd))){
 			//나온 회원의 비번이랑 입력한 비번이 같이 
-			System.out.println("아이디는 있다. 근데 비번이 틀림");
+			//System.out.println("아이디는 있다. 근데 비번이 틀림");
+			System.out.println("로그인 실패ㅠ");
 			return false;
 		}else {
 			// 어플리케이션 프로퍼티를 점검하

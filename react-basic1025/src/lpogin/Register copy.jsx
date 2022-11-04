@@ -18,7 +18,9 @@
     }){
     console.log("Register render!");
     const navigate = useNavigate();
-    let ref = useRef(null);
+
+    let ref = useRef();
+
     const myIdRef = useRef(null);
     const [member, setMember] = useState([
     {
@@ -33,7 +35,8 @@
     }
     ]);
     const prevMember = MemberPrevious(member);
-    console.log("member id -> ",member.id == undefined);
+    console.log("member id -> ",member.id === undefined);
+    console.log(`ref => ${ref.current===undefined}`)
     useCallback(()=>{
     if(!prevMember) console.log("prevmember id -> ",prevMember.id);
     })

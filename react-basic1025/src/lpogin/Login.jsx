@@ -29,13 +29,6 @@ function Login(){
     }
 
     const letsLogin = useCallback((e) => {
-        // if(id.length === 0){
-        //     document.getElementsById("id").focus();
-        //     return;
-        // }else if(pwd.length === 0){
-        //     document.getElementsById("pwd").focus();
-        //     return;
-        // }
         registerAxios.post("/logIn",{
             id: id,
             pwd: pwd, 

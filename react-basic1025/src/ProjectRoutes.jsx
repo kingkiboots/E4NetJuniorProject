@@ -2,6 +2,7 @@ import React, {memo} from "react";
 import { Routes, Route} from "react-router-dom";
 import Login2 from "./lpogin/Login copy";
 import Register from "./lpogin/Register";
+import Register2 from "./lpogin/Register copy";
 import ChargeCash from "./main/ChargeCash";
 import PayCash from "./main/PayCash";
 import PayHistory from "./main/PayHistory";
@@ -11,7 +12,7 @@ function ProjectRoute() {
     return(
             <Routes>
                 <Route path="/" element={<Login2 />}>로그인</Route>
-                <Route path="/register" element={<Register />}>회원가입</Route>
+                <Route path="/register" element={<Register2 />}>회원가입</Route>
                 <Route path="/main" element={<MainLayOut />}>
                     <Route path="" element={
                     <div>

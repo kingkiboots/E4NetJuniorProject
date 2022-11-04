@@ -1,25 +1,26 @@
-import React, { useEffect, memo } from "react";
-import { useRef } from "react";
-import { useCallback } from "react";
-import { useState } from "react";
-import registerAxios from "../lib/Register_Axios";
-import Logo from "../asset/img/logo.png";
-import MemberPrevious from "./memberPrevious";
-import { Link } from "react-router-dom";
-import RegisterFormGroup1 from "./RegisterFormGroup1";
+    import React, { useEffect, memo } from "react";
+    import { useRef } from "react";
+    import { useCallback } from "react";
+    import { useState } from "react";
+    import registerAxios from "../lib/Register_Axios";
+    import Logo from "../asset/img/logo.png";
+    import MemberPrevious from "./memberPrevious";
+    import { Link, useNavigate } from "react-router-dom";
+    import RegisterFormGroup1 from "./RegisterFormGroup1";
 
 
-function Register({
-btnClick,
-btnName,
-isClickFilterBtn,
-children,
-}){
-console.log("Register render!");
-let ref = useRef(null);
-const myIdRef = useRef(null);
-const [member, setMember] = useState([
-{
+    function Register({
+    btnClick,
+    btnName,
+    isClickFilterBtn,
+    children,
+    }){
+    console.log("Register render!");
+    const navigate = useNavigate();
+    let ref = useRef(null);
+    const myIdRef = useRef(null);
+    const [member, setMember] = useState([
+    {
     id : '',
     pw : '',
     name:'',
@@ -28,47 +29,47 @@ const [member, setMember] = useState([
     postcode : '',
     addr : '',
     detailAddr : '',
-}
-]);
-const prevMember = MemberPrevious(member);
-console.log("member id -> ",member.id == undefined);
-useCallback(()=>{
-if(!prevMember) console.log("prevmember id -> ",prevMember.id);
-})
-useEffect(() => {
-document.addEventListener('mousedown', clickModalOutside);
-return () => {
+    }
+    ]);
+    const prevMember = MemberPrevious(member);
+    console.log("member id -> ",member.id == undefined);
+    useCallback(()=>{
+    if(!prevMember) console.log("prevmember id -> ",prevMember.id);
+    })
+    useEffect(() => {
+    document.addEventListener('mousedown', clickModalOutside);
+    return () => {
     document.removeEventListener('mousedown', clickModalOutside);
-};
-});
+    };
+    });
 
-const sliceMember = useCallback(() =>{
-let inputId = ref.current.value.toLowerCase();
-console.log(inputId);
-setMember({
-    ...member,    
-    [ref.current.name] : ref.current.value,
-});
-console.log("hello?");
-})
+    const sliceMember = useCallback(() =>{
+        let inputId = ref.current.value.toLowerCase();
+        console.log(inputId);
+        setMember({
+        ...member,    
+        [ref.current.name] : ref.current.value,
+        });
+        console.log("hello?");
+    })
 
-const clickModalOutside = (event) => {
-console.log(event.target);
-if (!myIdRef.current.contains(event.target)) {
+    const clickModalOutside = (event) => {
+    console.log(event.target);
+    if (!myIdRef.current.contains(event.target)) {
     console.log("another click");
     console.log(ref.current.value);
     if(ref.current.value !== "" && member.id !== ref.current.value) {console.log("setMember 실행!"); sliceMember();}
-}else{
+    }else{
     console.log("span click!");
-}
-};
+    }
+    };
 
-const dupCheck = useCallback(() => {
-console.log("아오옹오ㅗㄺid -----------> "+member.id);
-if (!prevMember || member.id === prevMember.id){
+    const dupCheck = useCallback(() => {
+    console.log("아오옹오ㅗㄺid -----------> "+member.id);
+    if (!prevMember || member.id === prevMember.id){
     console.log(member.id," :::::::::: ",prevMember.id);
     return true;
-}else{
+    }else{
     console.log("id -----------> "+member.id);
     console.log("prevmember ---------> "+prevMember.id);
     console.log("악시오스!")
@@ -88,33 +89,120 @@ if (!prevMember || member.id === prevMember.id){
         return false;
     }
     }).catch(err =>{ console.log("error!!!! =>",err) })*/
-}
-}, [prevMember]);
+    }
+    }, [prevMember]);
 
 
-const validateForm = () => {
-if ((member.id).length > 0 && (member.pwd).length > 0 && (member.email).length > 0){
-    return false;
-}else{
-    return true;
-}
-} 
+    const validateForm = () => {
+    if ((member.id).length > 0 && (member.pwd).length > 0 && (member.email).length > 0){
+        return false;
+    }else{
+        return true;
+    }
+    } 
 
-const handleSubmit = (event) => {
-    event.preventDefault();
-}
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        navigate("/");
+    }
 
-return(
-<div className="container">
-<div className='authentication-wrapper authentication-basic container-p-y'>
-<div className="card m-auto">
+    return(
+    <div className="container">
+    <div className='authentication-wrapper authentication-basic container-p-y'>
+    <div className="card m-auto">
     <div className="card-body m-auto">
     <picture>
         <source srcSet={Logo} media="all and (min-width: 800px)"/> 
         <img src={Logo}  className="my-4 img" alt="이포넷 로고 이미지" />
     </picture>
         <form className="register-form form" onSubmit={handleSubmit}>
-            <RegisterFormGroup1 member={member} setMember={setMember} />
+        <div className="row-group">
+                        <div className="join-row">
+                            <h3 className="join-title">
+                                <label htmlFor="id">아이디</label>
+                            </h3>
+                            <span ref={myIdRef}>
+                            <input type="text" className="form-control mr-3 my-0 lt-6" style={{display:'inline', width:"100%"}} 
+                            name="id" id="id"
+                            ref={ref}
+                            // onKeyUp={() => {
+                            //     let inputId = ref.current.value.toLowerCase();
+                            //     setTimeout(() => {
+                            //         if(inputId === ref.current.value.toLowerCase()){
+                            //             setMember({
+                            //                 ...member,    
+                            //                 [ref.current.name] : ref.current.value,
+                            //             });
+                            //         }
+                            //     },600);
+                            // }}
+                            required/>
+                            </span>
+                            <span className="error_next_box" id="idMsg" style={{ariaLive:"assertive"}}>
+                                필수 정보입니다.
+                            </span>
+                        </div>
+                        <div className="join-row">
+                            <h3 className="join-title">
+                                <label htmlFor="pwd">비밀번호</label>
+                            </h3>
+                            <input type="password" className="form-control mr-3 my-0 lt-6" style={{display:'inline', width:"100%"}} 
+                            name="pwd" id="pwd"
+                            ref={ref}
+                            onKeyUp={() => {
+                                let inputPwd = ref.current.value.toLowerCase();
+                                setTimeout(() => {
+                                    if(inputPwd === ref.current.value.toLowerCase()){
+                                        setMember({
+                                            ...member,    
+                                            [ref.current.name] : ref.current.value,
+                                        });
+                                    }
+                                },600);
+                            }}
+                            required/>
+                        </div>
+                        <div className="join-row">
+                            <h3 className="join-title">
+                                <label htmlFor="pwdCheck">비밀번호 확인</label>
+                            </h3>
+                            <input type="password" className="form-control mr-3 my-0 lt-6" style={{display:'inline', width:"100%"}} 
+                            name="pwdCheck" id="pwdCheck"
+                            ref={ref}
+                            onKeyUp={() => {
+                                let inputPwd = ref.current.value.toLowerCase();
+                                setTimeout(() => {
+                                    if(inputPwd === ref.current.value.toLowerCase()){
+                                        setMember({
+                                            ...member,    
+                                            [ref.current.name] : ref.current.value,
+                                        });
+                                    }
+                                },600);
+                            }}
+                            required/>
+                        </div>
+                        <div className="join-row">
+                            <h3 className="join-title">
+                                <label htmlFor="name">이름</label>
+                            </h3>
+                            <input type="text" className="form-control mr-3 my-0 lt-6" style={{display:'inline', width:"100%"}} 
+                            name="name" id="name"
+                            ref={ref}
+                            onKeyUp={() => {
+                                let inputPwd = ref.current.value.toLowerCase();
+                                setTimeout(() => {
+                                    if(inputPwd === ref.current.value.toLowerCase()){
+                                        setMember({
+                                            ...member,    
+                                            [ref.current.name] : ref.current.value,
+                                        });
+                                    }
+                                },600);
+                            }}
+                            required/>
+                        </div>
+                    </div>
             <div className="row-group">
                 <div className="join-row">
                     <h3 className="join-title">
@@ -223,20 +311,16 @@ return(
                     required/>
                 </div>
             </div>
-            <div className="button-container my-auto"><Link to={"/"}>
+            <div className="button-container my-auto">
                     <button type="submit" className="loginBtn btn btn-danger btn-lg btn-block mx-auto mt-5 mb-4" 
-                    style={{width:'100%'}} 
-disabled={((member.id === undefined||member.id.length < 1)||(member.pwd === undefined||member.pwd.length < 1)||
-    (member.name === undefined||member.name.length < 1) || (member.postcode === undefined||member.postcode.length < 1)||
-    (member.tel1 === undefined||member.tel1.length < 1 )||(member.addr === undefined||member.addr.length < 1 ))}
-                    >회원가입</button></Link>
+                    style={{width:'100%'}}>회원가입</button>
                 </div>
         </form>
     </div>
-</div>
-</div>
-</div>
-)
-}
+    </div>
+    </div>
+    </div>
+    )
+    }
 
-export default memo(Register);
+    export default memo(Register);

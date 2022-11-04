@@ -15,7 +15,7 @@ function LogInRes({loginCnt, loginStatus}){
     }
     return (
         <div>
-            {logInRes() }
+            { logInRes() }
         </div>
     );
 }

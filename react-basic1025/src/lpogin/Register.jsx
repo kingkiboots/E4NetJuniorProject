@@ -89,7 +89,6 @@ if (!prevMember || member.id === prevMember.id){
     }
     }).catch(err =>{ console.log("error!!!! =>",err) })*/
 }
-console.log("끝!")
 }, [prevMember]);
 
 
@@ -114,7 +113,7 @@ return(
         <source srcSet={Logo} media="all and (min-width: 800px)"/> 
         <img src={Logo}  className="my-4 img" alt="이포넷 로고 이미지" />
     </picture>
-        <form className="register-form form">
+        <form className="register-form form" onSubmit={handleSubmit}>
             <RegisterFormGroup1 member={member} setMember={setMember} />
             <div className="row-group">
                 <div className="join-row">

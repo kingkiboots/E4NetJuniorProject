@@ -19,6 +19,14 @@ function Login(){
     const [pwd, setPwd] = useState("");
     const [loginCnt, setLoginCnt] = useState(0);
     const [loginStatus, setLoginStatus] = useState(false);
+//setCount(count + amount)는 연속으로 두번 한다고 해도 한번빢에 반영이 되지 않는다.
+//리액트 배치는 setState 두개를 연속으로 setstate하면 두번 안하고 동시에 수행하기 때문이다!
+//근데 콜백함수로 하면 한번에 하나씩 한다.
+    function countUp(amount) {
+        setLoginCnt(currentCount => {
+            return currentCount + amount;
+        })
+    }
 
     const letsLogin = useCallback((e) => {
         // if(id.length === 0){
@@ -38,7 +46,7 @@ function Login(){
         }).catch(err => {
             console.log(`Error Occured!!! =>{$err.code}`);
             if (err.code === "ERR_BAD_REQUEST"){
-                setLoginCnt(loginCnt+1);
+                countUp(1);
             }
         })
     })
